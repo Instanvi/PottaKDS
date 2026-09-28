@@ -6,9 +6,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/ColorsAndBrushes.xaml"/>
-                <ResourceDictionary Source="/Resources/ButtonStyles.xaml"/>
-                <ResourceDictionary Source="/Resources/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Components/ColorsAndBrushes.xaml"/>
+                <ResourceDictionary Source="/COmponents/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Components/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Components/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Resources/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
@@ -38,7 +39,7 @@
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="BorderBrush" Value="#E5E7EB"/>
                 <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="CornerRadius" Value="2"/>
                 <Setter Property="Margin" Value="0,0,0,14"/>
                 <Setter Property="Padding" Value="16"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>

@@ -194,10 +194,40 @@ namespace PottaKDS.Models
             get
             {
                 if (!IsRefired || !RefiredAt.HasValue) return string.Empty;
-                var span = DateTime.Now - RefiredAt.Value;
-                if (span.TotalMinutes < 1) return "Refired just now";
-                if (span.TotalMinutes < 60) return $"Refired {(int)span.TotalMinutes}m ago";
-                return $"Refired {(int)span.TotalHours}h {(int)span.Minutes}m ago";
+                
+                var elapsed = DateTime.Now - RefiredAt.Value;
+                
+                // Less than 1 minute
+                if (elapsed.TotalSeconds < 60)
+                    return "Refired just now";
+                
+                // Less than 1 hour - show minutes
+                if (elapsed.TotalMinutes < 60)
+                {
+                    int minutes = (int)elapsed.TotalMinutes;
+                    return $"Refired {minutes} min{(minutes != 1 ? "s" : "")} ago";
+                }
+                
+                // Less than 24 hours - show hours and minutes
+                if (elapsed.TotalHours < 24)
+                {
+                    int hours = (int)elapsed.TotalHours;
+                    int minutes = elapsed.Minutes;
+                    
+                    if (minutes == 0)
+                        return $"Refired {hours} hr{(hours != 1 ? "s" : "")} ago";
+                    
+                    return $"Refired {hours}h {minutes}m ago";
+                }
+                
+                // 24 hours or more - show days
+                int days = (int)elapsed.TotalDays;
+                int remainingHours = elapsed.Hours;
+                
+                if (remainingHours == 0)
+                    return $"Refired {days} day{(days != 1 ? "s" : "")} ago";
+                
+                return $"Refired {days}d {remainingHours}h ago";
             }
         }
 
@@ -206,11 +236,38 @@ namespace PottaKDS.Models
             get
             {
                 var elapsed = DateTime.Now - CreatedDate;
-                if (elapsed.TotalMinutes < 1)
+                
+                // Less than 1 minute
+                if (elapsed.TotalSeconds < 60)
                     return "Just now";
+                
+                // Less than 1 hour - show minutes
                 if (elapsed.TotalMinutes < 60)
-                    return $"{(int)elapsed.TotalMinutes}m ago";
-                return $"{(int)elapsed.TotalHours}h {elapsed.Minutes}m ago";
+                {
+                    int minutes = (int)elapsed.TotalMinutes;
+                    return $"{minutes} min{(minutes != 1 ? "s" : "")}";
+                }
+                
+                // Less than 24 hours - show hours and minutes
+                if (elapsed.TotalHours < 24)
+                {
+                    int hours = (int)elapsed.TotalHours;
+                    int minutes = elapsed.Minutes;
+                    
+                    if (minutes == 0)
+                        return $"{hours} hr{(hours != 1 ? "s" : "")}";
+                    
+                    return $"{hours}h {minutes}m";
+                }
+                
+                // 24 hours or more - show days and hours
+                int days = (int)elapsed.TotalDays;
+                int remainingHours = elapsed.Hours;
+                
+                if (remainingHours == 0)
+                    return $"{days} day{(days != 1 ? "s" : "")}";
+                
+                return $"{days}d {remainingHours}h";
             }
         }
 
@@ -219,7 +276,7 @@ namespace PottaKDS.Models
             get
             {
                 var elapsed = DateTime.Now - CreatedDate;
-                return elapsed.TotalMinutes >= 20; // Highlight in amber/red if waiting > 20 mins
+                return elapsed.TotalMinutes >= 15; // Highlight in amber/red if waiting > 15 mins
             }
         }
 

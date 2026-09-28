@@ -5,11 +5,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" 
         Title="Potta KDS - Connection Settings" 
-        Height="540" Width="480"
+        Height="700" Width="600"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="{StaticResource BackgroundBrush}"
         WindowStyle="SingleBorderWindow">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Components/ColorsAndBrushes.xaml"/>
+                <ResourceDictionary Source="/Components/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Components/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Components/TextBoxStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid Margin="24">
         <Grid.RowDefinitions>
@@ -62,7 +73,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0"
-                                    Style="{StaticResource NeutralButtonStyle}"
+                                    Style="{StaticResource NuetralCancelButtonStyle}"
                                     Command="{Binding TestConnectionCommand}"
                                     IsEnabled="{Binding IsTesting, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Margin="0,0,4,0">
@@ -75,7 +86,6 @@
                             <Button Grid.Column="1"
                                     Style="{StaticResource SecondaryButtonStyle}"
                                     Command="{Binding ScanNetworkCommand}"
-                                    Height="36"
                                     Margin="4,0,0,0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Path Data="{StaticResource IconSearchGeometry}" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Width="13" Height="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
@@ -124,7 +134,7 @@
                             <ItemsControl ItemsSource="{Binding DiscoveredServers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Button Style="{StaticResource NeutralButtonStyle}" Height="36" Margin="0,2"
+                                        <Button Style="{StaticResource NuetralCancelButtonStyle}" Height="36" Margin="0,2"
                                                 HorizontalContentAlignment="Left"
                                                 Command="{Binding DataContext.SelectServerCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                 CommandParameter="{Binding}">
@@ -157,7 +167,7 @@
                                 <TextBlock Text="Auto-Refresh Interval" FontSize="13" FontWeight="Medium" FontFamily="{StaticResource OutfitMedium}"/>
                                 <TextBlock Text="How often orders refresh from server" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
                             </StackPanel>
-                            <ComboBox Grid.Column="1" Width="110" Height="32" 
+                            <ComboBox Grid.Column="1" Style="{StaticResource ComboBoxStyle}"
                                       SelectedValuePath="Tag"
                                       SelectedValue="{Binding PollIntervalSeconds}">
                                 <ComboBoxItem Content="3 seconds" Tag="3"/>
@@ -178,7 +188,7 @@
                                 <TextBlock Text="Audio Chimes" FontSize="13" FontWeight="Medium" FontFamily="{StaticResource OutfitMedium}"/>
                                 <TextBlock Text="Play sound when new orders or refires arrive" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
                             </StackPanel>
-                            <CheckBox Grid.Column="1" Style="{StaticResource TouchCheckBoxStyle}" IsChecked="{Binding AudioAlertsEnabled}"/>
+                            <ToggleButton Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ModernToggleButtonStyle}" IsChecked="{Binding AudioAlertsEnabled}"/>
                         </Grid>
 
                         <!-- Fullscreen on Startup -->
@@ -191,7 +201,7 @@
                                 <TextBlock Text="Start in Fullscreen" FontSize="13" FontWeight="Medium" FontFamily="{StaticResource OutfitMedium}"/>
                                 <TextBlock Text="Optimized for dedicated kitchen monitors" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
                             </StackPanel>
-                            <CheckBox Grid.Column="1" Style="{StaticResource TouchCheckBoxStyle}" IsChecked="{Binding FullscreenOnStartup}"/>
+                            <ToggleButton Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ModernToggleButtonStyle}"  IsChecked="{Binding FullscreenOnStartup}"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -206,13 +216,13 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Content="Cancel" 
-                    Style="{StaticResource NeutralButtonStyle}" 
-                    Margin="0,0,6,0" Height="40"
+                    Style="{StaticResource NuetralCancelButtonStyle}" 
+                    Margin="0,0,6,0"
                     Click="CancelButton_Click"/>
 
             <Button Grid.Column="1" Content="Save &amp; Connect" 
                     Style="{StaticResource PrimaryButtonStyle}" 
-                    Margin="6,0,0,0" Height="40"
+                    Margin="6,0,0,0"
                     Command="{Binding SaveSettingsCommand}"/>
         </Grid>
     </Grid>

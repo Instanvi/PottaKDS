@@ -36,43 +36,38 @@ namespace PottaKDS.Components
             string title = "Confirmation",
             MessageBoxType type = MessageBoxType.Confirmation,
             MessageBoxButtons buttons = MessageBoxButtons.YesNo,
-            Window? owner = null)
+            Window owner = null)
         {
             var messageBox = new CustomMessageBox();
             messageBox.Configure(message, title, type, buttons);
 
-            var ownerWindow = owner ?? Application.Current?.MainWindow;
+            var ownerWindow = owner ?? Application.Current.MainWindow;
 
-            Point ownerScreenPos = new Point(100, 100);
-            double ownerWidth = 800;
-            double ownerHeight = 600;
-
-            if (ownerWindow != null)
+            Point ownerScreenPos;
+            try
             {
-                try
-                {
-                    ownerScreenPos = ownerWindow.PointToScreen(new Point(0, 0));
-                    ownerWidth = ownerWindow.ActualWidth;
-                    ownerHeight = ownerWindow.ActualHeight;
-                }
-                catch
-                {
-                    ownerScreenPos = new Point(ownerWindow.Left, ownerWindow.Top);
-                }
+                ownerScreenPos = ownerWindow.PointToScreen(new Point(0, 0));
+            }
+            catch (InvalidOperationException)
+            {
+
+                ownerScreenPos = new Point(ownerWindow.Left, ownerWindow.Top);
             }
 
             var hostWindow = new Window
             {
                 WindowStyle = WindowStyle.None,
                 ResizeMode = ResizeMode.NoResize,
-                Background = new SolidColorBrush(Color.FromArgb(140, 0, 0, 0)),
+                Background = new SolidColorBrush(Color.FromArgb(150, 0, 0, 0)),
                 AllowsTransparency = true,
                 ShowInTaskbar = false,
                 Topmost = true,
                 Owner = ownerWindow,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Width = ownerWidth > 0 ? ownerWidth : 800,
-                Height = ownerHeight > 0 ? ownerHeight : 600
+                WindowStartupLocation = WindowStartupLocation.Manual,
+                Width = ownerWindow.ActualWidth,
+                Height = ownerWindow.ActualHeight,
+                Left = ownerScreenPos.X,
+                Top = ownerScreenPos.Y
             };
 
             var rootGrid = new Grid { Background = Brushes.Transparent };
@@ -95,7 +90,7 @@ namespace PottaKDS.Components
             [MessageBoxType.Success] = (
                 "M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z",
                 "M7.5 12.5l3 3 6-6",
-                "#15803D", "#DCFCE7", "#15803D"),
+                "#065F46", "#D1FAE5", "#065F46"),
 
             [MessageBoxType.Warning] = (
                 "M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z",
@@ -110,7 +105,7 @@ namespace PottaKDS.Components
             [MessageBoxType.Confirmation] = (
                 "M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z",
                 "M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3 M12 16h.01",
-                "#1B5E20", "#F0FDF4", "#1B5E20"),
+                "#374151", "#F8FAFC", "#111827"),
         };
 
         private void Configure(string message, string title, MessageBoxType type, MessageBoxButtons buttons)
@@ -121,15 +116,26 @@ namespace PottaKDS.Components
             var (circle, symbol, colorHex, headerHex, titleHex) = IconMap[type];
             var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colorHex));
 
+            // Solid filled disc
             IconCircle.Data = Geometry.Parse(circle);
             IconCircle.Fill = brush;
+            IconCircle.Stroke = Brushes.Transparent;
+            IconCircle.StrokeThickness = 0;
 
+            // White symbol on top
             IconSymbol.Data = Geometry.Parse(symbol);
             IconSymbol.Stroke = Brushes.White;
+            IconSymbol.Fill = Brushes.Transparent;
+            IconSymbol.StrokeThickness = 2;
+            IconSymbol.StrokeLineJoin = PenLineJoin.Round;
+            IconSymbol.StrokeStartLineCap = PenLineCap.Round;
+            IconSymbol.StrokeEndLineCap = PenLineCap.Round;
 
+            // Header colors
             HeaderBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(headerHex));
             TitleTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(titleHex));
 
+            // Buttons
             switch (buttons)
             {
                 case MessageBoxButtons.YesNo:
@@ -150,7 +156,7 @@ namespace PottaKDS.Components
                     CancelButton.Visibility = Visibility.Collapsed;
                     ConfirmButton.Content = "OK";
                     ConfirmButton.Visibility = Visibility.Visible;
-                    Grid.SetColumn(ConfirmButton, 2);
+                    ConfirmButton.SetValue(Grid.ColumnProperty, 2);
                     break;
             }
         }

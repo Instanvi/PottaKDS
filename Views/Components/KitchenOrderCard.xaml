@@ -5,7 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignWidth="360">
-    
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Components/ColorsAndBrushes.xaml"/>
+                <ResourceDictionary Source="/Components/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Components/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Components/TextBoxStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Border>
         <!-- Dynamic Styling based on IsRefired -->
         <Border.Style>
@@ -272,42 +283,31 @@
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="8"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Ready / Done Button -->
-                <Button Grid.Column="0" 
+                <Button x:Name="ReadyButton"
+                        Grid.Column="0" 
                         Style="{StaticResource PrimaryButtonStyle}"
                         Click="DoneButton_Click"
-                        ToolTip="Mark order ready">
+                        ToolTip="Mark order ready - all items will be marked as completed">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Path Data="{StaticResource IconCheckGeometry}" Fill="White" Stretch="Uniform" Width="13" Height="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                         <TextBlock Text="Ready" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
-                <!-- Delay Button -->
-                <Button Grid.Column="1" 
+                <!-- Delayed Button -->
+                <Button x:Name="DelayedButton"
+                        Grid.Column="2" 
                         Style="{StaticResource CancelButtonStyle}"
-                        Margin="6,0"
-                        Padding="12,8"
                         Click="DelayButton_Click"
-                        ToolTip="Mark order delayed">
+                        ToolTip="Mark order as delayed - indicates order will take longer">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Path Data="{StaticResource IconClockGeometry}" Fill="{StaticResource DangerBrush}" Stretch="Uniform" Width="13" Height="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Delay" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- Complete / Clear Button -->
-                <Button Grid.Column="2" 
-                        Style="{StaticResource SecondaryButtonStyle}"
-                        Click="CompleteButton_Click"
-                        ToolTip="Complete and clear from kitchen display">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Path Data="{StaticResource IconClearGeometry}" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Width="12" Height="12" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                        <Path Data="{StaticResource IconClearGeometry}" Fill="White" Stretch="Uniform" Width="12" Height="12" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Delayed" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
             </Grid>

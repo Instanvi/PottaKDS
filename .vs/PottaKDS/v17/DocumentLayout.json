@@ -3,12 +3,76 @@
   "WorkspaceRootPath": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\pottakds.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:pottakds.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\services\\kdsapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:services\\kdsapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\components\\buttonstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:components\\buttonstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\components\\textboxstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:components\\textboxstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\views\\components\\kitchenordercard.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:views\\components\\kitchenordercard.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\components\\comboboxstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:components\\comboboxstyles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\views\\components\\kitchenordercard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:views\\components\\kitchenordercard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\viewmodels\\kdsdashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:viewmodels\\kdsdashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\services\\landiscoveryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:services\\landiscoveryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\services\\settingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:services\\settingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\views\\dialogs\\settingswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:views\\dialogs\\settingswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\components\\custommessagebox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:components\\custommessagebox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\components\\colorsandbrushes.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:components\\colorsandbrushes.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\resources\\icons.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:resources\\icons.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\components\\custommessagebox.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:components\\custommessagebox.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\resources\\custommessagebox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:resources\\custommessagebox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|c:\\users\\thuram jr\\source\\repos\\pottapos\\potta finance\\pottakds\\pottakds.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{6241161A-5D6F-3BE4-FE8E-F3B3BCE5C5A3}|PottaKDS.csproj|solutionrelative:pottakds.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,7 +102,217 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "KdsDashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\ViewModels\\KdsDashboardViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\KdsDashboardViewModel.cs",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\ViewModels\\KdsDashboardViewModel.cs",
+              "RelativeToolTip": "ViewModels\\KdsDashboardViewModel.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAAYwCUCAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-28T17:04:16.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LanDiscoveryService.cs",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Services\\LanDiscoveryService.cs",
+              "RelativeDocumentMoniker": "Services\\LanDiscoveryService.cs",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Services\\LanDiscoveryService.cs",
+              "RelativeToolTip": "Services\\LanDiscoveryService.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-28T17:11:55.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "KdsApiService.cs",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Services\\KdsApiService.cs",
+              "RelativeDocumentMoniker": "Services\\KdsApiService.cs",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Services\\KdsApiService.cs",
+              "RelativeToolTip": "Services\\KdsApiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALwAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-28T17:03:40.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "KitchenOrderCard.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Views\\Components\\KitchenOrderCard.xaml",
+              "RelativeDocumentMoniker": "Views\\Components\\KitchenOrderCard.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Views\\Components\\KitchenOrderCard.xaml",
+              "RelativeToolTip": "Views\\Components\\KitchenOrderCard.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:44:31.6Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TextBoxStyles.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\TextBoxStyles.xaml",
+              "RelativeDocumentMoniker": "Components\\TextBoxStyles.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\TextBoxStyles.xaml",
+              "RelativeToolTip": "Components\\TextBoxStyles.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:37:22.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ComboBoxStyles.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\ComboBoxStyles.xaml",
+              "RelativeDocumentMoniker": "Components\\ComboBoxStyles.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\ComboBoxStyles.xaml",
+              "RelativeToolTip": "Components\\ComboBoxStyles.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:46:31.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KitchenOrderCard.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Views\\Components\\KitchenOrderCard.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\Components\\KitchenOrderCard.xaml.cs",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Views\\Components\\KitchenOrderCard.xaml.cs",
+              "RelativeToolTip": "Views\\Components\\KitchenOrderCard.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-28T15:02:17.105Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ButtonStyles.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\ButtonStyles.xaml",
+              "RelativeDocumentMoniker": "Components\\ButtonStyles.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\ButtonStyles.xaml",
+              "RelativeToolTip": "Components\\ButtonStyles.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:35:46.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SettingsService.cs",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Services\\SettingsService.cs",
+              "RelativeDocumentMoniker": "Services\\SettingsService.cs",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Services\\SettingsService.cs",
+              "RelativeToolTip": "Services\\SettingsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-28T17:11:40.375Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T13:34:06.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ColorsAndBrushes.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\ColorsAndBrushes.xaml",
+              "RelativeDocumentMoniker": "Components\\ColorsAndBrushes.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\ColorsAndBrushes.xaml",
+              "RelativeToolTip": "Components\\ColorsAndBrushes.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:11:27.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SettingsWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Views\\Dialogs\\SettingsWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\Dialogs\\SettingsWindow.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Views\\Dialogs\\SettingsWindow.xaml",
+              "RelativeToolTip": "Views\\Dialogs\\SettingsWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:35:25.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CustomMessageBox.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\CustomMessageBox.xaml",
+              "RelativeDocumentMoniker": "Components\\CustomMessageBox.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\CustomMessageBox.xaml",
+              "RelativeToolTip": "Components\\CustomMessageBox.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:40:13.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:56:37.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CustomMessageBox.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\CustomMessageBox.xaml.cs",
+              "RelativeDocumentMoniker": "Components\\CustomMessageBox.xaml.cs",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Components\\CustomMessageBox.xaml.cs",
+              "RelativeToolTip": "Components\\CustomMessageBox.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-28T15:04:10.61Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Icons.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Resources\\Icons.xaml",
+              "RelativeDocumentMoniker": "Resources\\Icons.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Resources\\Icons.xaml",
+              "RelativeToolTip": "Resources\\Icons.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T15:06:26.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CustomMessageBox.xaml",
+              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Resources\\CustomMessageBox.xaml",
+              "RelativeDocumentMoniker": "Resources\\CustomMessageBox.xaml",
+              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\Resources\\CustomMessageBox.xaml",
+              "RelativeToolTip": "Resources\\CustomMessageBox.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-28T14:37:31.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "PottaKDS.csproj",
               "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\PottaKDS.csproj",
               "RelativeDocumentMoniker": "PottaKDS.csproj",
@@ -48,17 +322,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-09-28T13:38:11.303Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Thuram Jr\\source\\repos\\PottaPOS\\Potta Finance\\PottaKDS\\MainWindow.xaml",
-              "RelativeToolTip": "MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-28T13:34:06.251Z"
             }
           ]
         }

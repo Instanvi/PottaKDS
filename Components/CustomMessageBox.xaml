@@ -9,25 +9,24 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/ColorsAndBrushes.xaml"/>
-                <ResourceDictionary Source="/Resources/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Components/ColorsAndBrushes.xaml"/>
+                <ResourceDictionary Source="/Components/ButtonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
         <Border x:Name="DialogContainer"
-                Width="480" 
-                MinHeight="180"
+                Width="500" 
+                MinHeight="200"
                 MaxHeight="400"
                 Background="White"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 BorderThickness="1"
-                BorderBrush="#E0E0E0"
-                CornerRadius="8">
+                BorderBrush="#E0E0E0">
             <Border.Effect>
-                <DropShadowEffect Color="Black" Opacity="0.25" BlurRadius="24" ShadowDepth="4"/>
+                <DropShadowEffect Color="Black" Opacity="0.3" BlurRadius="20" ShadowDepth="0"/>
             </Border.Effect>
 
             <Grid>
@@ -38,60 +37,116 @@
                 </Grid.RowDefinitions>
 
                 <!-- Header -->
-                <Border Grid.Row="0" x:Name="HeaderBorder" Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="#E5E7EB" CornerRadius="8,8,0,0">
-                    <Grid Height="56">
+                <Border Grid.Row="0" x:Name="HeaderBorder" Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="#E5E7EB">
+                    <Grid Height="60">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Icon: vector disc + symbol -->
-                        <Viewbox Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="20,0,12,0">
+                        <!-- Icon: two Paths filled disc + white symbol on top -->
+                        <Viewbox Grid.Column="0"
+                                 Width="28" Height="28"
+                                 VerticalAlignment="Center"
+                                 Margin="24,0,12,0">
                             <Canvas Width="24" Height="24">
-                                <Path x:Name="IconCircle" StrokeThickness="0" Fill="#1E40AF"/>
-                                <Path x:Name="IconSymbol" Fill="Transparent" Stroke="White" StrokeThickness="2"
-                                      StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                <Path x:Name="IconCircle"
+                                      StrokeThickness="0"
+                                      Fill="#1E40AF"/>
+                                <Path x:Name="IconSymbol"
+                                      Fill="Transparent"
+                                      Stroke="White"
+                                      StrokeThickness="2"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"/>
                             </Canvas>
                         </Viewbox>
 
                         <!-- Title -->
-                        <TextBlock x:Name="TitleTextBlock" Grid.Column="1" Text="Confirmation" 
-                                   FontSize="16" FontWeight="SemiBold"
-                                   FontFamily="{StaticResource OutfitBold}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TitleTextBlock"
+                                   Grid.Column="1"
+                                   Text="Confirmation" 
+                                   FontSize="18" 
+                                   FontFamily="{StaticResource OutfitBold}"
+                                   VerticalAlignment="Center"/>
 
-                        <!-- Close Button -->
-                        <Button x:Name="CloseButton" Grid.Column="2" Content="✕" 
-                                FontSize="14" FontFamily="{StaticResource OutfitMedium}"
-                                Background="Transparent" BorderThickness="0"
-                                Width="44" Height="44" Click="CloseButton_Click" Cursor="Hand" Visibility="Collapsed"/>
+                        <!-- Close button -->
+                        <Button x:Name="CloseButton"
+                                Grid.Column="2" 
+                                Content="×" 
+                                FontSize="32" 
+                                Background="Transparent" 
+                                BorderThickness="0"
+                                Width="50" 
+                                Height="50"
+                                Click="CloseButton_Click"
+                                Cursor="Hand"
+                                Visibility="Collapsed">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="#666666"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="#DC2626"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </Grid>
                 </Border>
 
                 <!-- Content -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="24,18">
+                <ScrollViewer Grid.Row="1" 
+                              VerticalScrollBarVisibility="Auto"
+                              Margin="24,20">
                     <TextBlock x:Name="MessageTextBlock"
                                Text="Are you sure you want to proceed?" 
-                               FontSize="14" FontFamily="{StaticResource OutfitRegular}"
-                               Foreground="#374151" TextWrapping="Wrap" LineHeight="22"/>
+                               FontSize="14" 
+                               FontFamily="{StaticResource OutfitRegular}"
+                               Foreground="#374151"
+                               TextWrapping="Wrap"
+                               LineHeight="22"/>
                 </ScrollViewer>
 
-                <!-- Footer Buttons -->
-                <Border Grid.Row="2" Background="#F8FAFC" BorderThickness="0,1,0,0" BorderBrush="#E5E7EB" CornerRadius="0,0,8,8">
-                    <Grid Margin="20,14" x:Name="ButtonPanel">
+                <!-- Footer -->
+                <Border Grid.Row="2" Background="#F8FAFC" BorderThickness="0,1,0,0" BorderBrush="#E5E7EB">
+                    <Grid Margin="24,16" x:Name="ButtonPanel">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button x:Name="CancelButton" Grid.Column="1" Content="Cancel"
-                                Style="{StaticResource NeutralButtonStyle}"
-                                Width="110" Height="38" Margin="0,0,10,0" Click="CancelButton_Click"/>
+                        <Button x:Name="CancelButton"
+                                Grid.Column="1" 
+                                Content="Cancel"
+                                Style="{StaticResource NuetralCancelButtonStyle}"
+                                FontFamily="{StaticResource OutfitMedium}"
+                                Width="120" 
+                                Height="40"
+                                Margin="0,0,12,0"
+                                Click="CancelButton_Click"/>
 
-                        <Button x:Name="ConfirmButton" Grid.Column="2" Content="Confirm"
+                        <Button x:Name="ConfirmButton"
+                                Grid.Column="2" 
+                                Content="Confirm"
                                 Style="{StaticResource PrimaryButtonStyle}"
-                                Width="110" Height="38" Click="ConfirmButton_Click"/>
+                                FontFamily="{StaticResource OutfitMedium}"
+                                Width="120" 
+                                Height="40"
+                                Click="ConfirmButton_Click"/>
                     </Grid>
                 </Border>
             </Grid>
