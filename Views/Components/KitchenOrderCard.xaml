@@ -1,0 +1,316 @@
+<UserControl x:Class="PottaKDS.Views.Components.KitchenOrderCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignWidth="360">
+    
+    <Border>
+        <!-- Dynamic Styling based on IsRefired -->
+        <Border.Style>
+            <Style TargetType="Border" BasedOn="{StaticResource KitchenCardStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsRefired}" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource RefireBorderBrush}"/>
+                        <Setter Property="BorderThickness" Value="2.5"/>
+                        <Setter Property="Background" Value="{StaticResource RefireSurfaceBrush}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Header & Refire -->
+                <RowDefinition Height="*"/>    <!-- Items List -->
+                <RowDefinition Height="Auto"/> <!-- Progress & Notes -->
+                <RowDefinition Height="Auto"/> <!-- Footer & Actions -->
+            </Grid.RowDefinitions>
+
+            <!-- 1. Header Row -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                <!-- REFIRE Badge (Visible only if refired) -->
+                <Border Background="#FF6B6B" CornerRadius="4" 
+                        Padding="8,4" HorizontalAlignment="Left" Margin="0,0,0,8"
+                        Visibility="{Binding IsRefired, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="🔥 REFIRE" Foreground="White" 
+                                   FontWeight="Bold" FontSize="12"
+                                   FontFamily="{StaticResource OutfitBold}"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding DisplayRefireTime, StringFormat='  ({0})'}" 
+                                   Foreground="White" FontSize="11"
+                                   FontFamily="{StaticResource OutfitRegular}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Refire Reason (if any) -->
+                <Border Background="#FEE2E2" CornerRadius="4" Padding="8,6" Margin="0,0,0,8"
+                        Visibility="{Binding IsRefired, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding RefireReason, StringFormat='Reason: {0}'}" 
+                                   FontSize="12" FontWeight="SemiBold"
+                                   FontFamily="{StaticResource OutfitSemiBold}"
+                                   Foreground="#DC2626" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding RefiredByStaffName, StringFormat='Refired by: {0}'}" 
+                                   FontSize="11" FontFamily="{StaticResource OutfitRegular}"
+                                   Foreground="#7F1D1D" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Title, Status, and Elapsed Time Row -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <!-- Table Info / Order Title -->
+                        <TextBlock Text="{Binding DisplayOrderId}" 
+                                   Style="{StaticResource OrderIdStyle}"/>
+                        
+                        <!-- Transaction ID -->
+                        <TextBlock Text="{Binding DisplayTransactionId}" 
+                                   FontSize="11" FontFamily="{StaticResource OutfitRegular}"
+                                   Foreground="{StaticResource TextMutedBrush}" Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Status Pill & Timer -->
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <!-- Status Indicator Circle & Text -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Border>
+                                <Border.Style>
+                                    <Style TargetType="Border" BasedOn="{StaticResource StatusIndicatorStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                <Setter Property="Background" Value="{StaticResource WarningBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Delayed">
+                                                <Setter Property="Background" Value="{StaticResource DangerBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Ready">
+                                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Completed">
+                                                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            <TextBlock Text="{Binding Status}" 
+                                       FontSize="12" FontWeight="SemiBold"
+                                       FontFamily="{StaticResource OutfitSemiBold}"
+                                       VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                <Setter Property="Foreground" Value="{StaticResource WarningBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Delayed">
+                                                <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Ready">
+                                                <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Live Waiting Elapsed Time with Vector Clock -->
+                        <Border CornerRadius="4" Padding="6,2" Margin="0,4,0,0" HorizontalAlignment="Right">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="#F3F4F6"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsUrgent}" Value="True">
+                                            <Setter Property="Background" Value="#FEE2E2"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Data="{StaticResource IconClockGeometry}" 
+                                      Stretch="Uniform" Width="11" Height="11" Margin="0,0,4,0" VerticalAlignment="Center">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Fill" Value="{StaticResource TextSecondaryBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsUrgent}" Value="True">
+                                                    <Setter Property="Fill" Value="{StaticResource DangerBrush}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                                <TextBlock Text="{Binding WaitingTime}" 
+                                           FontSize="11" FontWeight="Medium"
+                                           FontFamily="{StaticResource OutfitMedium}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsUrgent}" Value="True">
+                                                    <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <!-- 2. Cart Items List -->
+            <Border Grid.Row="1" BorderBrush="#F3F4F6" BorderThickness="0,1,0,1" Padding="0,8" Margin="0,4,0,8">
+                <ItemsControl ItemsSource="{Binding CartItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,4" Cursor="Hand" Background="Transparent"
+                                  MouseLeftButtonUp="ItemRow_MouseLeftButtonUp">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Quantity Badge -->
+                                <Border Grid.Column="0" Background="#F3F4F6" CornerRadius="4" 
+                                        MinWidth="26" Height="26" Padding="6,2" 
+                                        VerticalAlignment="Top" Margin="0,0,8,0">
+                                    <TextBlock Text="{Binding Quantity, StringFormat='{}{0}×'}" 
+                                               FontSize="12" FontWeight="Bold"
+                                               FontFamily="{StaticResource OutfitBold}"
+                                               Foreground="{StaticResource TextPrimaryBrush}"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Item Name & Modifiers -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,0">
+                                    <TextBlock Text="{Binding Name}" 
+                                               FontSize="14" FontWeight="Medium"
+                                               FontFamily="{StaticResource OutfitMedium}"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <!-- Modifiers (e.g. + Extra Cheese) -->
+                                    <TextBlock Text="{Binding ModifiersText}"
+                                               FontSize="12"
+                                               FontFamily="{StaticResource OutfitRegular}"
+                                               Foreground="#2563EB"
+                                               FontStyle="Italic"
+                                               TextWrapping="Wrap"
+                                               Margin="0,2,0,0"
+                                               Visibility="{Binding HasModifiers, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </StackPanel>
+
+                                <!-- Touch Checkbox -->
+                                <CheckBox Grid.Column="2" 
+                                          Style="{StaticResource TouchCheckBoxStyle}"
+                                          IsChecked="{Binding IsCompleted, Mode=TwoWay}"
+                                          Click="ItemCheckBox_Click"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+            <!-- 3. Notes & Progress Row -->
+            <StackPanel Grid.Row="2" Margin="0,0,0,10">
+                <!-- Order Notes (if any) with vector note icon -->
+                <Border Background="#FEF3C7" CornerRadius="4" Padding="8,6" Margin="0,0,0,6"
+                        Visibility="{Binding HasNotes, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource IconNoteGeometry}" 
+                              Fill="#B45309" Stretch="Uniform" Width="13" Height="13" 
+                              Margin="0,2,6,0" VerticalAlignment="Top"/>
+                        <TextBlock Text="{Binding Notes}" 
+                                   FontSize="12" FontFamily="{StaticResource OutfitRegular}"
+                                   Foreground="#92400E" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Items Progress Bar & Summary -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="{Binding CompletionProgress}" 
+                               FontSize="11" FontFamily="{StaticResource OutfitRegular}"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+
+                    <TextBlock Grid.Column="1" Text="{Binding DisplayOrderTime}" 
+                               FontSize="11" FontFamily="{StaticResource OutfitRegular}"
+                               Foreground="{StaticResource TextMutedBrush}"/>
+                </Grid>
+            </StackPanel>
+
+            <!-- 4. Action Buttons Footer -->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Ready / Done Button -->
+                <Button Grid.Column="0" 
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="DoneButton_Click"
+                        ToolTip="Mark order ready">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconCheckGeometry}" Fill="White" Stretch="Uniform" Width="13" Height="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Ready" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Delay Button -->
+                <Button Grid.Column="1" 
+                        Style="{StaticResource CancelButtonStyle}"
+                        Margin="6,0"
+                        Padding="12,8"
+                        Click="DelayButton_Click"
+                        ToolTip="Mark order delayed">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconClockGeometry}" Fill="{StaticResource DangerBrush}" Stretch="Uniform" Width="13" Height="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Delay" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Complete / Clear Button -->
+                <Button Grid.Column="2" 
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="CompleteButton_Click"
+                        ToolTip="Complete and clear from kitchen display">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconClearGeometry}" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Width="12" Height="12" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

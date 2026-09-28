@@ -1,0 +1,112 @@
+<Application x:Class="PottaKDS.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PottaKDS"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/ColorsAndBrushes.xaml"/>
+                <ResourceDictionary Source="/Resources/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Resources/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Resources/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Embedded Outfit Fonts -->
+            <FontFamily x:Key="OutfitThin">/PottaKDS;component/Fonts/#Outfit Thin</FontFamily>
+            <FontFamily x:Key="OutfitLight">/PottaKDS;component/Fonts/#Outfit Light</FontFamily>
+            <FontFamily x:Key="OutfitRegular">/PottaKDS;component/Fonts/#Outfit Regular</FontFamily>
+            <FontFamily x:Key="OutfitMedium">/PottaKDS;component/Fonts/#Outfit Medium</FontFamily>
+            <FontFamily x:Key="OutfitSemiBold">/PottaKDS;component/Fonts/#Outfit SemiBold</FontFamily>
+            <FontFamily x:Key="OutfitBold">/PottaKDS;component/Fonts/#Outfit Bold</FontFamily>
+            <FontFamily x:Key="OutfitExtraBold">/PottaKDS;component/Fonts/#Outfit ExtraBold</FontFamily>
+            <FontFamily x:Key="OutfitBlack">/PottaKDS;component/Fonts/#Outfit Black</FontFamily>
+
+            <!-- Standard Converters -->
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+            <!-- Global Touch Screen & Panning Support for ScrollViewers -->
+            <Style TargetType="{x:Type ScrollViewer}">
+                <Setter Property="PanningMode" Value="Both"/>
+                <Setter Property="PanningDeceleration" Value="0.001"/>
+                <Setter Property="PanningRatio" Value="1"/>
+                <Setter Property="IsDeferredScrollingEnabled" Value="False"/>
+            </Style>
+
+            <!-- Kitchen Card Base Style -->
+            <Style x:Key="KitchenCardStyle" TargetType="Border">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Margin" Value="0,0,0,14"/>
+                <Setter Property="Padding" Value="16"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="1" Direction="270" Color="#000000" Opacity="0.05"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Status Indicator Circle Style -->
+            <Style x:Key="StatusIndicatorStyle" TargetType="Border">
+                <Setter Property="Width" Value="14"/>
+                <Setter Property="Height" Value="14"/>
+                <Setter Property="CornerRadius" Value="7"/>
+                <Setter Property="Margin" Value="4"/>
+            </Style>
+
+            <!-- Order Title Style -->
+            <Style x:Key="OrderIdStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="{StaticResource OutfitBold}"/>
+                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Touch CheckBox Style -->
+            <Style x:Key="TouchCheckBoxStyle" TargetType="CheckBox">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Padding" Value="6"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="CheckBox">
+                            <Grid Background="Transparent">
+                                <Border x:Name="chkBorder"
+                                        Width="24"
+                                        Height="24"
+                                        CornerRadius="5"
+                                        BorderBrush="#D1D5DB"
+                                        BorderThickness="1.5"
+                                        Background="White">
+                                    <Path x:Name="chkCheck"
+                                          Data="{StaticResource IconCheckGeometry}"
+                                          Fill="{StaticResource PrimaryBrush}"
+                                          Stretch="Uniform"
+                                          Width="14" Height="14"
+                                          Visibility="Collapsed"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="chkBorder" Property="Background" Value="#DCFCE7"/>
+                                    <Setter TargetName="chkBorder" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                                    <Setter TargetName="chkCheck" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="chkBorder" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

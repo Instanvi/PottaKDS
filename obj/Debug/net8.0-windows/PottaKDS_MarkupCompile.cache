@@ -1,0 +1,20 @@
+﻿PottaKDS
+1.0.0.0
+
+winexe
+C#
+.cs
+C:\Users\Thuram Jr\source\repos\PottaPOS\Potta Finance\PottaKDS\obj\Debug\net8.0-windows\
+PottaKDS
+none
+false
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\Thuram Jr\source\repos\PottaPOS\Potta Finance\PottaKDS\App.xaml
+8-50305622
+
+261095526565
+200122885478
+Components\CustomMessageBox.xaml;MainWindow.xaml;Resources\ButtonStyles.xaml;Resources\ColorsAndBrushes.xaml;Resources\Icons.xaml;Resources\TextBoxStyles.xaml;Views\Components\KitchenOrderCard.xaml;Views\Dialogs\SettingsWindow.xaml;
+
+False
+
