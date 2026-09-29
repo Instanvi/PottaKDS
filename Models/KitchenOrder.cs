@@ -302,6 +302,7 @@ namespace PottaKDS.Models
         {
             "Pending" => "WarningBrush",
             "Delayed" => "DangerBrush",
+            "Cancelled" => "DangerBrush",
             "Ready" => "PrimaryBrush",
             "Completed" => "AccentBrush",
             _ => "TextSecondaryBrush"

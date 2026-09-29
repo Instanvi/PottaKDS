@@ -103,6 +103,9 @@
                                             <DataTrigger Binding="{Binding Status}" Value="Delayed">
                                                 <Setter Property="Background" Value="{StaticResource DangerBrush}"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Cancelled">
+                                                <Setter Property="Background" Value="{StaticResource DangerBrush}"/>
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding Status}" Value="Ready">
                                                 <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                                             </DataTrigger>
