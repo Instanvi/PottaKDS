@@ -52,7 +52,7 @@ namespace PottaKDS.Views.Dialogs {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PottaKDS;V1.0.0.0;component/views/dialogs/settingswindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PottaKDS;V1.3.6.2;component/views/dialogs/settingswindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Dialogs\SettingsWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

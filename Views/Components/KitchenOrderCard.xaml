@@ -79,6 +79,20 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
+                        <!-- Channel / Order Type Badge -->
+                        <Border Background="{Binding ChannelBackground}" 
+                                BorderBrush="{Binding ChannelBorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="4" 
+                                Padding="6,2" 
+                                HorizontalAlignment="Left" 
+                                Margin="0,0,0,4">
+                            <TextBlock Text="{Binding ChannelBadgeText}" 
+                                       FontSize="11" FontWeight="Bold"
+                                       FontFamily="{StaticResource OutfitBold}"
+                                       Foreground="{Binding ChannelForeground}"/>
+                        </Border>
+
                         <!-- Table Info / Order Title -->
                         <TextBlock Text="{Binding DisplayOrderId}" 
                                    Style="{StaticResource OrderIdStyle}"/>

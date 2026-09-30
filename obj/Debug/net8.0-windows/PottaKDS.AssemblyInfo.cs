@@ -13,11 +13,11 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("PottaKDS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bc071fa6410c45ef19f360a8459211c3d39d070")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.3.6.2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.3.6.2+b07728fc6e5d3c86641ace2f9240302d43805035")]
 [assembly: System.Reflection.AssemblyProductAttribute("PottaKDS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PottaKDS")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.3.6.2")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 

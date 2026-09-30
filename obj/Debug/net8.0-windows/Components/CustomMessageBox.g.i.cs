@@ -132,7 +132,7 @@ namespace PottaKDS.Components {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PottaKDS;V1.0.0.0;component/components/custommessagebox.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PottaKDS;V1.3.6.2;component/components/custommessagebox.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Components\CustomMessageBox.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

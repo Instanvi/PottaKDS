@@ -177,6 +177,30 @@ namespace PottaKDS.Models
         }
 
         // Computed display properties
+        public bool IsOnlineOrder => 
+            (!string.IsNullOrEmpty(TableName) && TableName.StartsWith("Online", StringComparison.OrdinalIgnoreCase)) ||
+            (!string.IsNullOrEmpty(TransactionId) && (TransactionId.StartsWith("web_", StringComparison.OrdinalIgnoreCase) || TransactionId.StartsWith("ORD-", StringComparison.OrdinalIgnoreCase)));
+
+        public bool IsDelivery => 
+            (!string.IsNullOrEmpty(TableName) && TableName.IndexOf("Delivery", StringComparison.OrdinalIgnoreCase) >= 0) ||
+            (!string.IsNullOrEmpty(Notes) && Notes.IndexOf("[DELIVERY]", StringComparison.OrdinalIgnoreCase) >= 0);
+
+        public bool IsPickup => 
+            (!string.IsNullOrEmpty(TableName) && TableName.IndexOf("Pickup", StringComparison.OrdinalIgnoreCase) >= 0) ||
+            (!string.IsNullOrEmpty(Notes) && Notes.IndexOf("[PICKUP]", StringComparison.OrdinalIgnoreCase) >= 0);
+
+        public string ChannelBadgeText => 
+            IsDelivery ? "ONLINE DELIVERY" : (IsPickup ? "ONLINE PICKUP" : (TableNumber.HasValue ? $"TABLE #{TableNumber}" : (!string.IsNullOrEmpty(TableName) ? TableName.ToUpperInvariant() : "DIRECT ORDER")));
+
+        public string ChannelBackground => 
+            IsDelivery ? "#EFF6FF" : (IsPickup ? "#F5F3FF" : "#F3F4F6");
+
+        public string ChannelForeground => 
+            IsDelivery ? "#1D4ED8" : (IsPickup ? "#6D28D9" : "#374151");
+
+        public string ChannelBorderBrush => 
+            IsDelivery ? "#BFDBFE" : (IsPickup ? "#DDD6FE" : "#E5E7EB");
+
         public string DisplayOrderId => TableNumber.HasValue 
             ? $"Table #{TableNumber}" 
             : (!string.IsNullOrEmpty(TableName) ? TableName : $"Order #{TransactionId}");
