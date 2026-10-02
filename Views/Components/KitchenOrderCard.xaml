@@ -197,6 +197,38 @@
                         </Border>
                     </StackPanel>
                 </Grid>
+
+                <!-- Customer Details & Delivery Location Panel (For Online Orders / Delivery) -->
+                <Border Background="#F8FAFC" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="10,8" Margin="0,8,0,0"
+                        Visibility="{Binding HasCustomerInfo, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel>
+                        <!-- Customer Name (No customer phone displayed for kitchen) -->
+                        <TextBlock Text="{Binding CustomerName}" 
+                                   FontSize="13" FontWeight="Bold" FontFamily="{StaticResource OutfitBold}" Foreground="#0F172A" TextTrimming="CharacterEllipsis"/>
+
+                        <!-- Delivery Location (Order Description) -->
+                        <Border Background="#FEF3C7" BorderBrush="#FDE68A" BorderThickness="1" CornerRadius="4" Padding="8,5" Margin="0,4,0,0"
+                                Visibility="{Binding HasLocation, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Grid.Column="0" Data="{StaticResource IconPinGeometry}" Fill="#B45309" Stretch="Uniform" Width="12" Height="12" Margin="0,2,6,0" VerticalAlignment="Top"/>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="LOCATION (ORDER DESCRIPTION)" FontSize="9" FontWeight="Bold" FontFamily="{StaticResource OutfitBold}" Foreground="#92400E"/>
+                                    <TextBlock Text="{Binding CustomerLocation}" FontSize="12" FontWeight="SemiBold" FontFamily="{StaticResource OutfitSemiBold}" Foreground="#78350F" TextWrapping="Wrap" Margin="0,1,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Delivery Notes / Instructions (if any) -->
+                        <Border Background="#F1F5F9" CornerRadius="4" Padding="6,3" Margin="0,4,0,0"
+                                Visibility="{Binding HasDeliveryNotes, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Text="{Binding DeliveryNotes, StringFormat='Instructions: {0}'}" FontSize="11" FontFamily="{StaticResource OutfitRegular}" Foreground="#475569" FontStyle="Italic" TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
             <!-- 2. Cart Items List -->
@@ -264,21 +296,8 @@
                 </ItemsControl>
             </Border>
 
-            <!-- 3. Notes & Progress Row -->
+            <!-- 3. Progress Row -->
             <StackPanel Grid.Row="2" Margin="0,0,0,10">
-                <!-- Order Notes (if any) with vector note icon -->
-                <Border Background="#FEF3C7" CornerRadius="4" Padding="8,6" Margin="0,0,0,6"
-                        Visibility="{Binding HasNotes, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <StackPanel Orientation="Horizontal">
-                        <Path Data="{StaticResource IconNoteGeometry}" 
-                              Fill="#B45309" Stretch="Uniform" Width="13" Height="13" 
-                              Margin="0,2,6,0" VerticalAlignment="Top"/>
-                        <TextBlock Text="{Binding Notes}" 
-                                   FontSize="12" FontFamily="{StaticResource OutfitRegular}"
-                                   Foreground="#92400E" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </Border>
-
                 <!-- Items Progress Bar & Summary -->
                 <Grid>
                     <Grid.ColumnDefinitions>

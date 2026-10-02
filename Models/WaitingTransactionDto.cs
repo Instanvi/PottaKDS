@@ -12,6 +12,21 @@ namespace PottaKDS.Models
         [JsonPropertyName("customerId")]
         public string? CustomerId { get; set; }
 
+        [JsonPropertyName("customerName")]
+        public string? CustomerName { get; set; }
+
+        [JsonPropertyName("customerPhone")]
+        public string? CustomerPhone { get; set; }
+
+        [JsonPropertyName("deliveryAddress")]
+        public string? DeliveryAddress { get; set; }
+
+        [JsonPropertyName("isOnlineOrder")]
+        public bool IsOnlineOrder { get; set; }
+
+        [JsonPropertyName("isDelivery")]
+        public bool IsDelivery { get; set; }
+
         [JsonPropertyName("tableId")]
         public string? TableId { get; set; }
 

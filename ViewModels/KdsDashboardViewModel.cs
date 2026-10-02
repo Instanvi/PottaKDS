@@ -355,6 +355,16 @@ namespace PottaKDS.ViewModels
                     existing.TableNumber = dto.TableNumber;
                     existing.TableName = dto.TableName;
                     existing.Notes = dto.Notes;
+                    if (!string.IsNullOrEmpty(dto.CustomerName)) existing.CustomerName = dto.CustomerName;
+                    existing.CustomerPhone = null; // Kitchen does not know customer phone
+                    if (dto.IsOnlineOrder) existing.IsOnlineOrderExplicit = true;
+                    if (dto.IsDelivery) existing.IsDeliveryExplicit = true;
+                    existing.CustomerLocation = (dto.IsDelivery && KitchenOrder.IsRealAddress(dto.DeliveryAddress)) ? dto.DeliveryAddress : null;
+
+                    if (string.IsNullOrEmpty(existing.CustomerName) || (dto.IsDelivery && string.IsNullOrEmpty(existing.CustomerLocation)))
+                    {
+                        existing.ExtractCustomerDetailsFromNotes();
+                    }
 
                     // Check for refire change
                     if (dto.IsRefired && !existing.IsRefired)
@@ -419,8 +429,18 @@ namespace PottaKDS.ViewModels
                 IsRefired = dto.IsRefired,
                 RefireReason = dto.RefireReason,
                 RefiredAt = dto.RefiredAt,
-                RefiredByStaffName = dto.RefiredByStaffName
+                RefiredByStaffName = dto.RefiredByStaffName,
+                CustomerName = dto.CustomerName,
+                CustomerPhone = null, // Kitchen does not know customer phone
+                CustomerLocation = (dto.IsDelivery && KitchenOrder.IsRealAddress(dto.DeliveryAddress)) ? dto.DeliveryAddress : null,
+                IsOnlineOrderExplicit = dto.IsOnlineOrder ? true : null,
+                IsDeliveryExplicit = dto.IsDelivery ? true : null
             };
+
+            if (string.IsNullOrEmpty(order.CustomerName) || (dto.IsDelivery && string.IsNullOrEmpty(order.CustomerLocation)))
+            {
+                order.ExtractCustomerDetailsFromNotes();
+            }
 
             if (dto.Items != null)
             {
