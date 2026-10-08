@@ -237,7 +237,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,4" Cursor="Hand" Background="Transparent"
-                                  MouseLeftButtonUp="ItemRow_MouseLeftButtonUp">
+                                  PreviewMouseLeftButtonDown="ItemRow_PreviewMouseLeftButtonDown">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>

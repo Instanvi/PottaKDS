@@ -13,7 +13,10 @@
     <Version>$(APP_VERSION)</Version>
     <AssemblyVersion>$(APP_VERSION)</AssemblyVersion>
     <FileVersion>$(APP_VERSION)</FileVersion>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>false</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>

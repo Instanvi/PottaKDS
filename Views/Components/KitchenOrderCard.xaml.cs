@@ -159,13 +159,34 @@ namespace PottaKDS.Views.Components
                 DataContext is KitchenOrder order &&
                 Application.Current?.MainWindow?.DataContext is KdsDashboardViewModel vm)
             {
+                // Prevent MouseButtonUp from also firing (stops double-toggle)
+                e.Handled = true;
+                
                 _ = vm.ToggleItemCompletionAsync(order, item);
             }
         }
 
-        private void ItemRow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ItemRow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is FrameworkElement elem && elem.DataContext is KitchenOrderItemModel item &&
+            // Check if click originated from CheckBox - if so, ignore (let checkbox handle it)
+            if (e.OriginalSource is FrameworkElement elem)
+            {
+                // Walk up visual tree to check if we're inside a CheckBox
+                DependencyObject parent = elem;
+                while (parent != null)
+                {
+                    if (parent is CheckBox)
+                    {
+                        // Click originated from checkbox - let checkbox handle it exclusively
+                        e.Handled = true;
+                        return;
+                    }
+                    parent = System.Windows.Media.VisualTreeHelper.GetParent(parent);
+                }
+            }
+
+            // Click originated from item row (not checkbox) - toggle completion
+            if (sender is FrameworkElement rowElem && rowElem.DataContext is KitchenOrderItemModel item &&
                 DataContext is KitchenOrder order &&
                 Application.Current?.MainWindow?.DataContext is KdsDashboardViewModel vm)
             {

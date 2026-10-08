@@ -223,7 +223,15 @@ namespace PottaKDS.ViewModels
             {
                 try
                 {
-                    var discovered = await _lanDiscovery.DiscoverServerAsync();
+                    var progress = new Progress<string>(msg => 
+                    {
+                        Application.Current?.Dispatcher?.Invoke(() =>
+                        {
+                            LastRefreshedText = msg;
+                        });
+                    });
+
+                    var discovered = await _lanDiscovery.DiscoverServerAsync(progress);
                     if (discovered != null)
                     {
                         _settingsService.CurrentSettings.ServerIp = discovered.IpAddress;
@@ -242,6 +250,15 @@ namespace PottaKDS.ViewModels
 
             // Load first batch
             await LoadOrdersAsync();
+
+            // If still not connected after first load, prompt user to configure
+            if (!IsConnected)
+            {
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    OpenSettingsRequested?.Invoke(this, EventArgs.Empty);
+                });
+            }
 
             // Start auto-poll timer
             StartTimers();

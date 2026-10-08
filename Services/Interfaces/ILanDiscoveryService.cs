@@ -17,6 +17,8 @@ namespace PottaKDS.Services.Interfaces
     public interface ILanDiscoveryService
     {
         Task<DiscoveredServer?> DiscoverServerAsync(IProgress<string>? progress = null, CancellationToken cancellationToken = default);
+        Task<DiscoveredServer?> DiscoverServerAsync(int port, IProgress<string>? progress = null, CancellationToken cancellationToken = default);
         Task<List<DiscoveredServer>> ScanNetworkAsync(IProgress<string>? progress = null, CancellationToken cancellationToken = default);
+        Task<List<DiscoveredServer>> ScanNetworkAsync(int port, IProgress<string>? progress = null, CancellationToken cancellationToken = default);
     }
 }

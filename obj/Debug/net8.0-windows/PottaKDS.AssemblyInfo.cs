@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PottaKDS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.3.6.2")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.3.6.2+785a94761a109396ef43fc61ba6b295e228227c6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.3.6.2+d183c6a33c82d922b1e0e5104fd934b4b3744547")]
 [assembly: System.Reflection.AssemblyProductAttribute("PottaKDS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PottaKDS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.3.6.2")]

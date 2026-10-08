@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="/Components/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="/Components/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Components/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Resources/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -73,10 +74,10 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0"
-                                    Style="{StaticResource NuetralCancelButtonStyle}"
-                                    Command="{Binding TestConnectionCommand}"
-                                    IsEnabled="{Binding IsTesting, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Margin="0,0,4,0">
+                                     Style="{StaticResource NuetralCancelButtonStyle}"
+                                     Command="{Binding TestConnectionCommand}"
+                                     IsEnabled="{Binding IsTesting, Converter={StaticResource InverseBooleanConverter}}"
+                                     Margin="0,0,4,0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Path Data="{StaticResource IconCheckGeometry}" Fill="{StaticResource TextPrimaryBrush}" Stretch="Uniform" Width="12" Height="12" Margin="0,0,6,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Test Connection" VerticalAlignment="Center"/>
@@ -84,17 +85,43 @@
                             </Button>
 
                             <Button Grid.Column="1"
-                                    Style="{StaticResource SecondaryButtonStyle}"
-                                    Command="{Binding ScanNetworkCommand}"
-                                    Margin="4,0,0,0">
+                                     Style="{StaticResource SecondaryButtonStyle}"
+                                     Command="{Binding ScanNetworkCommand}"
+                                     IsEnabled="{Binding IsScanning, Converter={StaticResource InverseBooleanConverter}}"
+                                     Margin="4,0,0,0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Path Data="{StaticResource IconSearchGeometry}" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Width="13" Height="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Auto-Scan LAN" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="Auto-Scan LAN"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsScanning}" Value="True">
+                                                        <Setter Property="Text" Value="Scanning..."/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                 </StackPanel>
                             </Button>
                         </Grid>
 
-                        <!-- Test Feedback Message -->
+                        <!-- Scan Progress Message with Vector Search Icon -->
+                        <Border CornerRadius="6" Padding="10,8" Margin="0,6,0,0" Background="#F3F4F6"
+                                Visibility="{Binding IsScanning, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DockPanel LastChildFill="True">
+                                <Path Data="{StaticResource IconSearchGeometry}" Fill="{StaticResource PrimaryBrush}" 
+                                      Stretch="Uniform" Width="13" Height="13" Margin="0,0,8,0" 
+                                      VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                                <TextBlock Text="{Binding ScanStatusText}" 
+                                           FontSize="12" FontFamily="{StaticResource OutfitMedium}"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </Border>
+
+                        <!-- Test Feedback Message with Dynamic Vector Icons -->
                         <Border CornerRadius="6" Padding="10,8" Margin="0,6,0,0"
                                 Visibility="{Binding TestStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Border.Style>
@@ -110,22 +137,49 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="{Binding TestStatusMessage}" 
-                                       FontSize="12" FontFamily="{StaticResource OutfitMedium}">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsTestSuccess}" Value="True">
-                                                <Setter Property="Foreground" Value="#15803D"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsTestSuccess}" Value="False">
-                                                <Setter Property="Foreground" Value="#B91C1C"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                            <DockPanel LastChildFill="True">
+                                <Path Stretch="Uniform" Width="12" Height="12" Margin="0,0,8,0" VerticalAlignment="Center" DockPanel.Dock="Left">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTestSuccess}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Setter Property="Data" Value="{StaticResource IconCheckGeometry}"/>
+                                                    <Setter Property="Fill" Value="#15803D"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsTestSuccess}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Setter Property="Data" Value="{StaticResource IconClearGeometry}"/>
+                                                    <Setter Property="Fill" Value="#B91C1C"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsTesting}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Setter Property="Data" Value="{StaticResource IconRefreshGeometry}"/>
+                                                    <Setter Property="Fill" Value="{StaticResource PrimaryBrush}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                                <TextBlock Text="{Binding TestStatusMessage}" 
+                                           FontSize="12" FontFamily="{StaticResource OutfitMedium}"
+                                           TextWrapping="Wrap" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTestSuccess}" Value="True">
+                                                    <Setter Property="Foreground" Value="#15803D"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsTestSuccess}" Value="False">
+                                                    <Setter Property="Foreground" Value="#B91C1C"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DockPanel>
                         </Border>
 
                         <!-- Discovered Servers List with Vector Server Icon -->

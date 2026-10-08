@@ -36,7 +36,7 @@ namespace PottaKDS.Components
             string title = "Confirmation",
             MessageBoxType type = MessageBoxType.Confirmation,
             MessageBoxButtons buttons = MessageBoxButtons.YesNo,
-            Window owner = null)
+            Window? owner = null)
         {
             var messageBox = new CustomMessageBox();
             messageBox.Configure(message, title, type, buttons);

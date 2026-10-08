@@ -121,6 +121,22 @@ namespace PottaKDS.ViewModels
                 }
             });
             SaveSettingsCommand = new RelayCommand(async () => await SaveSettingsAsync());
+
+            // Auto-scan on dialog open if no valid connection
+            _ = AutoScanOnDialogOpen();
+        }
+
+        private async Task AutoScanOnDialogOpen()
+        {
+            // Wait a moment for UI to render
+            await Task.Delay(300);
+
+            // If current server is localhost/default and not connected, auto-scan
+            if ((ServerIp == "localhost" || ServerIp == "127.0.0.1") && !_apiService.IsConnected)
+            {
+                ScanStatusText = "Auto-scanning network for Potta POS servers...";
+                await ScanNetworkAsync();
+            }
         }
 
         public async Task TestConnectionAsync()
@@ -144,11 +160,11 @@ namespace PottaKDS.ViewModels
 
                 if (success)
                 {
-                    TestStatusMessage = $"✓ Connected successfully to {tempSettings.BaseUrl}!";
+                    TestStatusMessage = $"Connected successfully to {tempSettings.BaseUrl}!";
                 }
                 else
                 {
-                    TestStatusMessage = $"✗ Connection failed: {_apiService.LastErrorMessage ?? "No response from server"}";
+                    TestStatusMessage = $"Connection failed: {_apiService.LastErrorMessage ?? "No response from server"}";
                 }
             }
             finally
@@ -167,7 +183,8 @@ namespace PottaKDS.ViewModels
                 DiscoveredServers.Clear();
 
                 var progress = new Progress<string>(msg => ScanStatusText = msg);
-                var servers = await _lanDiscovery.ScanNetworkAsync(progress);
+                int targetPort = ServerPort > 0 ? ServerPort : 5001;
+                var servers = await _lanDiscovery.ScanNetworkAsync(targetPort, progress);
 
                 foreach (var server in servers)
                 {

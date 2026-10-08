@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -55,30 +56,91 @@ namespace PottaKDS.Services
         {
             try
             {
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(4));
-                var cleanUrl = baseUrl.TrimEnd('/');
-                var response = await _httpClient.GetAsync($"{cleanUrl}/health", cts.Token);
-                
-                if (response.IsSuccessStatusCode)
+                var cleanUrl = baseUrl.Trim().TrimEnd('/');
+                if (!cleanUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                    !cleanUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 {
-                    LastErrorMessage = null;
-                    return true;
+                    cleanUrl = $"http://{cleanUrl}";
                 }
 
-                // If /health isn't mapped, try /api/orders/waiting as fallback
-                var fallbackResponse = await _httpClient.GetAsync($"{cleanUrl}/api/orders/waiting", cts.Token);
-                if (fallbackResponse.IsSuccessStatusCode)
+                // 1. Try health check endpoint
+                try
                 {
-                    LastErrorMessage = null;
-                    return true;
+                    using var cts1 = new CancellationTokenSource(TimeSpan.FromSeconds(4));
+                    var response = await _httpClient.GetAsync($"{cleanUrl}/health", cts1.Token);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        LastErrorMessage = null;
+                        return true;
+                    }
+                }
+                catch (Exception ex) when (ex is not SocketException)
+                {
+                    // Fall through to next check
                 }
 
-                LastErrorMessage = $"Server returned HTTP {response.StatusCode}";
+                // 2. Try orders waiting endpoint
+                try
+                {
+                    using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+                    var fallbackResponse = await _httpClient.GetAsync($"{cleanUrl}/api/orders/waiting", cts2.Token);
+                    if (fallbackResponse.IsSuccessStatusCode)
+                    {
+                        LastErrorMessage = null;
+                        return true;
+                    }
+                }
+                catch (Exception ex) when (ex is not SocketException)
+                {
+                    // Fall through to next check
+                }
+
+                // 3. Try swagger documentation endpoint
+                try
+                {
+                    using var cts3 = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+                    var swaggerResponse = await _httpClient.GetAsync($"{cleanUrl}/swagger", cts3.Token);
+                    if (swaggerResponse.IsSuccessStatusCode || ((int)swaggerResponse.StatusCode >= 300 && (int)swaggerResponse.StatusCode < 400))
+                    {
+                        LastErrorMessage = null;
+                        return true;
+                    }
+                }
+                catch (Exception ex) when (ex is not SocketException)
+                {
+                    // Fall through
+                }
+
+                LastErrorMessage = "Server responded but endpoint returned an error status.";
                 return false;
             }
             catch (Exception ex)
             {
-                LastErrorMessage = ex.Message;
+                var innermost = ex;
+                while (innermost.InnerException != null)
+                {
+                    innermost = innermost.InnerException;
+                }
+
+                if (innermost is System.Net.Sockets.SocketException sockEx)
+                {
+                    LastErrorMessage = sockEx.SocketErrorCode switch
+                    {
+                        System.Net.Sockets.SocketError.ConnectionRefused => "Connection refused. Potta POS server is not running on this IP/port.",
+                        System.Net.Sockets.SocketError.TimedOut => "Connection timed out. Check IP and ensure firewall allows port 5001.",
+                        System.Net.Sockets.SocketError.HostNotFound or System.Net.Sockets.SocketError.HostUnreachable => "Host unreachable. Verify computers are on the same network.",
+                        _ => $"Network error: {sockEx.Message}"
+                    };
+                }
+                else if (ex is TaskCanceledException or OperationCanceledException)
+                {
+                    LastErrorMessage = "Connection timed out. Host did not respond.";
+                }
+                else
+                {
+                    LastErrorMessage = innermost.Message;
+                }
+
                 return false;
             }
         }
