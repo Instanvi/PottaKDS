@@ -63,59 +63,59 @@ namespace PottaKDS.Services
                     cleanUrl = $"http://{cleanUrl}";
                 }
 
-                // 1. Try health check endpoint
                 try
                 {
                     using var cts1 = new CancellationTokenSource(TimeSpan.FromSeconds(4));
                     var response = await _httpClient.GetAsync($"{cleanUrl}/health", cts1.Token);
                     if (response.IsSuccessStatusCode)
                     {
+                        IsConnected = true;
                         LastErrorMessage = null;
                         return true;
                     }
                 }
                 catch (Exception ex) when (ex is not SocketException)
                 {
-                    // Fall through to next check
                 }
 
-                // 2. Try orders waiting endpoint
                 try
                 {
                     using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(3));
                     var fallbackResponse = await _httpClient.GetAsync($"{cleanUrl}/api/orders/waiting", cts2.Token);
                     if (fallbackResponse.IsSuccessStatusCode)
                     {
+                        IsConnected = true;
                         LastErrorMessage = null;
                         return true;
                     }
                 }
                 catch (Exception ex) when (ex is not SocketException)
                 {
-                    // Fall through to next check
                 }
 
-                // 3. Try swagger documentation endpoint
                 try
                 {
                     using var cts3 = new CancellationTokenSource(TimeSpan.FromSeconds(3));
                     var swaggerResponse = await _httpClient.GetAsync($"{cleanUrl}/swagger", cts3.Token);
                     if (swaggerResponse.IsSuccessStatusCode || ((int)swaggerResponse.StatusCode >= 300 && (int)swaggerResponse.StatusCode < 400))
                     {
+                        IsConnected = true;
                         LastErrorMessage = null;
                         return true;
                     }
                 }
                 catch (Exception ex) when (ex is not SocketException)
                 {
-                    // Fall through
                 }
 
+                IsConnected = false;
                 LastErrorMessage = "Server responded but endpoint returned an error status.";
                 return false;
             }
             catch (Exception ex)
             {
+                IsConnected = false;
+                
                 var innermost = ex;
                 while (innermost.InnerException != null)
                 {

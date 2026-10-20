@@ -2,6 +2,7 @@ using PottaKDS.Models;
 using PottaKDS.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -143,15 +144,15 @@ namespace PottaKDS.ViewModels
         {
             if (IsTesting) return;
 
+            IsTesting = true;
+            TestStatusMessage = "Testing connection...";
+            IsTestSuccess = null;
+
             try
             {
-                IsTesting = true;
-                TestStatusMessage = "Testing connection...";
-                IsTestSuccess = null;
-
                 var tempSettings = new KdsSettings
                 {
-                    ServerIp = ServerIp,
+                    ServerIp = ServerIp.Trim(),
                     ServerPort = ServerPort
                 };
 
@@ -160,12 +161,18 @@ namespace PottaKDS.ViewModels
 
                 if (success)
                 {
-                    TestStatusMessage = $"Connected successfully to {tempSettings.BaseUrl}!";
+                    TestStatusMessage = $"Connection successful to {tempSettings.BaseUrl}";
                 }
                 else
                 {
-                    TestStatusMessage = $"Connection failed: {_apiService.LastErrorMessage ?? "No response from server"}";
+                    var errorDetail = _apiService.LastErrorMessage ?? "Server not responding";
+                    TestStatusMessage = $"Connection failed: {errorDetail}";
                 }
+            }
+            catch (Exception ex)
+            {
+                IsTestSuccess = false;
+                TestStatusMessage = $"Connection error: {ex.Message}";
             }
             finally
             {
@@ -177,9 +184,12 @@ namespace PottaKDS.ViewModels
         {
             if (IsScanning) return;
 
+            IsScanning = true;
+            TestStatusMessage = null;
+            IsTestSuccess = null;
+
             try
             {
-                IsScanning = true;
                 DiscoveredServers.Clear();
 
                 var progress = new Progress<string>(msg => ScanStatusText = msg);
@@ -193,12 +203,22 @@ namespace PottaKDS.ViewModels
 
                 if (DiscoveredServers.Count > 0)
                 {
-                    ScanStatusText = $"Found {DiscoveredServers.Count} server(s). Select one to connect.";
+                    var bestServer = DiscoveredServers.FirstOrDefault(s => !s.IsLocalhost) ?? DiscoveredServers[0];
+                    
+                    ServerIp = bestServer.IpAddress;
+                    ServerPort = bestServer.Port;
+                    ScanStatusText = $"Found {DiscoveredServers.Count} server(s). Selected {bestServer.ServerName}";
+                    
+                    await TestConnectionAsync();
                 }
                 else
                 {
                     ScanStatusText = "No Potta POS server found on LAN. Enter IP manually.";
                 }
+            }
+            catch (Exception ex)
+            {
+                ScanStatusText = $"Scan error: {ex.Message}";
             }
             finally
             {

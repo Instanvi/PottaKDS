@@ -1,203 +1,125 @@
-# PottaKDS Network Discovery - Quick Test Guide
+# PottaKDS Quick Test Guide
 
-## What Changed?
+## Test 1: Settings Window Singleton
 
-The KDS now **automatically scans all IPs on your network** to find Potta POS, instead of requiring manual IP entry.
+**Goal**: Verify only one Settings window can be open
 
-## Quick Test Scenarios
+1. Launch PottaKDS
+2. Click Settings gear icon
+3. Settings window opens
+4. Click Settings gear icon again
+5. **Expected**: Same window comes to front, no duplicate
+6. Minimize Settings window
+7. Click Settings gear icon
+8. **Expected**: Window restores and focuses
+9. Close Settings window
+10. Click Settings gear icon
+11. **Expected**: New window opens correctly
 
-### ✅ Test 1: Same Computer (Should work immediately)
-
-**Setup:**
-1. Start PottaAPI on port 5001
-2. Start PottaKDS
-
-**Expected Result:**
-- KDS connects to `localhost:5001` within 1 second
-- Shows "Connected (http://localhost:5001)" in green
-- No settings dialog opens
-
----
-
-### ✅ Test 2: Different Computer (Automatic network scan)
-
-**Setup:**
-1. Computer A: Start PottaAPI (note its IP, e.g., 192.168.1.100)
-2. Computer B: Start PottaKDS with default settings (serverIp = "localhost")
-
-**Expected Result:**
-1. KDS checks localhost → not found
-2. Shows message: "🔍 Scanning local network for Potta POS..."
-3. Progress updates: "⏳ Progress: 50% (127/254 IPs checked)"
-4. Finds server: "✓ Found server: 192.168.1.100:5001"
-5. Auto-connects automatically
-6. **Total time: 30-40 seconds**
+**Status**: Pass / Fail
 
 ---
 
-### ✅ Test 3: Manual Scan from Settings
+## Test 2: Auto-Scan Network
 
-**Setup:**
-1. PottaAPI running somewhere on network
-2. Open PottaKDS Settings (gear icon)
+**Goal**: Verify auto-scan finds server and tests connection automatically
 
-**Expected Result:**
-1. Settings dialog opens
-2. **Automatically starts scanning** (no button click needed!)
-3. Shows real-time progress messages
-4. Lists all discovered servers
-5. Click a server to select it
-6. Auto-tests connection
-7. Click "Save & Connect"
+1. Make sure PottaAPI is running on local network
+2. Launch PottaKDS
+3. Open Settings
+4. Click "Auto-Scan LAN" button
+5. **Expected**: Status shows "Scanning network..."
+6. **Expected**: Discovers server and updates IP field
+7. **Expected**: Automatically tests connection
+8. **Expected**: Green success box appears: "Connection successful to http://[IP]:5001"
 
----
-
-### ✅ Test 4: Connection Failure Recovery
-
-**Setup:**
-1. KDS is connected
-2. Stop PottaAPI
-3. Wait 5 seconds
-4. Restart PottaAPI
-
-**Expected Result:**
-- Status changes to "Connecting..." (orange)
-- Within 5 seconds, reconnects automatically
-- Status back to "Connected" (green)
+**Status**: Pass / Fail
 
 ---
 
-## How to Watch It Work
+## Test 3: Manual Test Connection - Success
 
-### In Settings Dialog
-Look for these progress messages in the settings dialog:
+**Goal**: Verify manual test shows clear success feedback
 
-```
-🔍 Checking localhost (Port 5001)...
-🔍 Checking 127.0.0.1:5001...
-🔍 Scanning local network for Potta POS...
-📡 Found 1 network interface(s)
-🔍 Scanning subnet 192.168.1.0/24...
-⏳ Progress: 25% (64/254 IPs checked)
-✓ Found server: 192.168.1.105:5001
-⏳ Progress: 50% (127/254 IPs checked)
-⏳ Progress: 75% (191/254 IPs checked)
-✓ Scan complete! Found 1 Potta POS server(s)
-```
+1. Open Settings
+2. Enter valid server IP (e.g., localhost or 127.0.0.1)
+3. Enter port 5001
+4. Click "Test Connection"
+5. **Expected**: Button shows "Testing connection..." briefly
+6. **Expected**: Green box appears with checkmark icon
+7. **Expected**: Message: "Connection successful to http://localhost:5001"
 
-### On Main Dashboard
-Watch the connection status indicator (top bar):
-- 🔴 Red "Connecting..." = No connection
-- 🟢 Green "Connected (http://...)" = Connected
+**Status**: Pass / Fail
 
 ---
 
-## Network Requirements
+## Test 4: Manual Test Connection - Failure
 
-### What needs to be open?
-On the **Potta POS computer**, ensure:
-- ✅ Port **5001** is open (Windows Firewall)
-- ✅ PottaAPI is running and listening on `0.0.0.0:5001` (not just localhost)
+**Goal**: Verify manual test shows clear failure feedback with reason
 
-### Check if API is accessible:
-From any computer on the network, open a browser and navigate to:
-```
-http://<POS_COMPUTER_IP>:5001/health
-```
+1. Open Settings
+2. Enter invalid IP (e.g., 192.168.1.999)
+3. Enter port 5001
+4. Click "Test Connection"
+5. **Expected**: Button shows "Testing connection..." briefly
+6. **Expected**: Red box appears with X icon
+7. **Expected**: Clear error message like:
+   - "Connection failed: Connection timed out. Host did not respond."
+   - "Connection failed: Host unreachable. Verify computers are on the same network."
+   - "Connection failed: Connection refused. Potta POS server is not running on this IP/port."
 
-You should see: `"Healthy"`
-
-If you get a timeout or error, the firewall is blocking it.
-
----
-
-## Performance Benchmarks
-
-| Scenario | Time to Connect |
-|----------|----------------|
-| **Localhost** | < 1 second |
-| **Same subnet (1-254 hosts)** | 30-40 seconds |
-| **Multiple subnets** | 60-80 seconds |
+**Status**: Pass / Fail
 
 ---
 
-## Troubleshooting
+## Test 5: Discovered Servers Selection
 
-### ❌ "No active network adapter found"
-**Problem:** Computer has no active Ethernet or WiFi
-**Fix:** Connect to a network via Ethernet or WiFi
+**Goal**: Verify clicking discovered server updates IP and tests
 
-### ❌ "No servers found" (but POS is running)
-**Possible causes:**
-1. **Firewall:** Port 5001 blocked on POS computer
-2. **API not listening:** PottaAPI is only listening on `localhost`, not `0.0.0.0`
-3. **Different subnet:** POS on 10.x.x.x, KDS on 192.168.x.x (router blocking)
+1. Open Settings
+2. Click "Auto-Scan LAN"
+3. Wait for scan to complete
+4. Multiple servers appear in list
+5. Click on a different server from the list
+6. **Expected**: IP and Port fields update
+7. **Expected**: Connection test runs automatically
+8. **Expected**: Success or failure message appears
 
-**How to fix:**
-1. Check firewall: Windows Defender Firewall → Allow PottaAPI.exe
-2. Check API config: Ensure it's not bound to `localhost` only
-3. Manual entry: Enter IP address manually in Settings
-
-### ❌ Scan takes too long
-**Cause:** Many devices on network (e.g., 100+ hosts)
-**Solution:** 
-- Wait for scan to complete (shows progress)
-- OR manually enter known IP address
+**Status**: Pass / Fail
 
 ---
 
-## What to Look For (Testing Checklist)
+## Common Issues
 
-- [ ] Localhost connection works instantly
-- [ ] Network scan shows real-time progress messages
-- [ ] Discovered servers appear in list
-- [ ] Clicking a server auto-tests connection
-- [ ] Success message shows "✓ Connected successfully!"
-- [ ] Settings dialog auto-scans when opened (if not connected)
-- [ ] Auto-reconnects after PottaAPI restart
-- [ ] Connection status indicator updates correctly
-- [ ] Orders load after successful connection
+### Test Connection shows nothing
+- **Check**: Is PottaAPI running?
+- **Check**: Are you on the same network?
+- **Check**: Is Windows Firewall blocking port 5001?
 
----
+### Auto-Scan finds no servers
+- **Check**: PottaAPI must be running
+- **Check**: Computers must be on same LAN
+- **Check**: Port 5001 must be accessible
 
-## Advanced: Simulating Network Issues
-
-### Test Auto-Reconnect:
-```powershell
-# Stop API
-Stop-Process -Name "PottaAPI" -Force
-
-# Wait 10 seconds (KDS will show "Connecting...")
-
-# Restart API
-cd "C:\Path\To\PottaAPI"
-dotnet run
-```
-
-### Test Firewall Blocking:
-```powershell
-# Block port 5001
-New-NetFirewallRule -DisplayName "Block PottaAPI Test" -Direction Inbound -LocalPort 5001 -Protocol TCP -Action Block
-
-# KDS should fail to connect
-# Settings dialog should open automatically
-
-# Unblock
-Remove-NetFirewallRule -DisplayName "Block PottaAPI Test"
-```
+### Settings window opens multiple times
+- **This is the bug we fixed** - Should not happen anymore
+- If it does, report as regression
 
 ---
 
-## Summary
+## Expected Results Summary
 
-**The Goal:** PottaKDS should find Potta POS automatically without needing to know the IP address.
+All tests should **PASS** with:
+1. Only one Settings window at a time
+2. Auto-scan automatically tests connection
+3. Test Connection shows clear green success or red failure
+4. Error messages are specific and helpful
+5. No duplicate windows
+6. Clean, professional UX
 
-**Key Improvements:**
-- ✅ Automatic localhost check (instant)
-- ✅ Automatic network scanning (30-40 seconds)
-- ✅ Real-time progress updates
-- ✅ Auto-opens settings if no connection
-- ✅ Lists all discovered servers
-- ✅ One-click connection
+---
 
-**Result:** 90% of users will never need to manually enter an IP address!
+## Build Info
+- Build Status: Successful
+- Target: .NET 8.0 Windows
+- Platform: win-x64

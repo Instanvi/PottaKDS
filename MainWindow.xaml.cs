@@ -18,6 +18,7 @@ namespace PottaKDS
         private readonly IServiceProvider _serviceProvider;
         private WindowStyle _previousStyle = WindowStyle.SingleBorderWindow;
         private WindowState _previousState = WindowState.Normal;
+        private SettingsWindow? _currentSettingsWindow = null;
 
         public MainWindow()
         {
@@ -123,16 +124,39 @@ namespace PottaKDS
 
         private void ViewModel_OpenSettingsRequested(object? sender, EventArgs e)
         {
+            // Check if a Settings window is already open
+            if (_currentSettingsWindow != null)
+            {
+                // Bring existing window to front instead of opening a new one
+                if (_currentSettingsWindow.WindowState == WindowState.Minimized)
+                {
+                    _currentSettingsWindow.WindowState = WindowState.Normal;
+                }
+                _currentSettingsWindow.Activate();
+                _currentSettingsWindow.Focus();
+                return;
+            }
+
+            // Create new Settings window
             var settingsVm = _serviceProvider.GetRequiredService<SettingsViewModel>();
-            var dialog = new SettingsWindow(settingsVm)
+            _currentSettingsWindow = new SettingsWindow(settingsVm)
             {
                 Owner = this
             };
 
-            if (dialog.ShowDialog() == true)
+            // Clear reference when window closes
+            _currentSettingsWindow.Closed += (s, args) =>
+            {
+                _currentSettingsWindow = null;
+            };
+
+            if (_currentSettingsWindow.ShowDialog() == true)
             {
                 _viewModel.RestartPolling();
             }
+
+            // Clear reference after modal closes
+            _currentSettingsWindow = null;
         }
 
         #region Masonry Multi-Column Distribution
