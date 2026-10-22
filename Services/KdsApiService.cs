@@ -37,12 +37,32 @@ namespace PottaKDS.Services
 
         public event EventHandler<bool>? ConnectionStatusChanged;
 
+        private int _consecutiveFailures = 0;
+        private const int MaxConsecutiveFailures = 3;
+
+        private void RecordSuccess()
+        {
+            _consecutiveFailures = 0;
+            IsConnected = true;
+            LastErrorMessage = null;
+        }
+
+        private void RecordFailure(string error)
+        {
+            _consecutiveFailures++;
+            LastErrorMessage = error;
+            if (_consecutiveFailures >= MaxConsecutiveFailures)
+            {
+                IsConnected = false;
+            }
+        }
+
         public KdsApiService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             _httpClient = new HttpClient
             {
-                Timeout = TimeSpan.FromSeconds(6)
+                Timeout = TimeSpan.FromSeconds(10)
             };
 
             _jsonOptions = new JsonSerializerOptions
@@ -69,8 +89,7 @@ namespace PottaKDS.Services
                     var response = await _httpClient.GetAsync($"{cleanUrl}/health", cts1.Token);
                     if (response.IsSuccessStatusCode)
                     {
-                        IsConnected = true;
-                        LastErrorMessage = null;
+                        RecordSuccess();
                         return true;
                     }
                 }
@@ -84,8 +103,7 @@ namespace PottaKDS.Services
                     var fallbackResponse = await _httpClient.GetAsync($"{cleanUrl}/api/orders/waiting", cts2.Token);
                     if (fallbackResponse.IsSuccessStatusCode)
                     {
-                        IsConnected = true;
-                        LastErrorMessage = null;
+                        RecordSuccess();
                         return true;
                     }
                 }
@@ -99,8 +117,7 @@ namespace PottaKDS.Services
                     var swaggerResponse = await _httpClient.GetAsync($"{cleanUrl}/swagger", cts3.Token);
                     if (swaggerResponse.IsSuccessStatusCode || ((int)swaggerResponse.StatusCode >= 300 && (int)swaggerResponse.StatusCode < 400))
                     {
-                        IsConnected = true;
-                        LastErrorMessage = null;
+                        RecordSuccess();
                         return true;
                     }
                 }
@@ -108,12 +125,14 @@ namespace PottaKDS.Services
                 {
                 }
 
+                _consecutiveFailures = MaxConsecutiveFailures;
                 IsConnected = false;
                 LastErrorMessage = "Server responded but endpoint returned an error status.";
                 return false;
             }
             catch (Exception ex)
             {
+                _consecutiveFailures = MaxConsecutiveFailures;
                 IsConnected = false;
                 
                 var innermost = ex;
@@ -150,7 +169,7 @@ namespace PottaKDS.Services
             var baseUrl = CurrentBaseUrl;
             try
             {
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(6));
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
                 var url = $"{baseUrl}/api/orders/waiting";
 
                 var response = await _httpClient.GetAsync(url, cts.Token);
@@ -158,22 +177,19 @@ namespace PottaKDS.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<ApiResponseDto<List<WaitingTransactionDto>>>(_jsonOptions, cts.Token);
-                    IsConnected = true;
-                    LastErrorMessage = null;
+                    RecordSuccess();
 
                     return result?.Data ?? new List<WaitingTransactionDto>();
                 }
                 else
                 {
-                    IsConnected = false;
-                    LastErrorMessage = $"API returned {response.StatusCode}";
+                    RecordFailure($"API returned {response.StatusCode}");
                     return new List<WaitingTransactionDto>();
                 }
             }
             catch (Exception ex)
             {
-                IsConnected = false;
-                LastErrorMessage = $"Connection error: {ex.Message}";
+                RecordFailure($"Connection error: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"[KdsApiService] Error fetching waiting transactions: {ex.Message}");
                 return new List<WaitingTransactionDto>();
             }
@@ -184,7 +200,7 @@ namespace PottaKDS.Services
             var baseUrl = CurrentBaseUrl;
             try
             {
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(6));
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
                 var url = $"{baseUrl}/api/orders/waiting/{Uri.EscapeDataString(transactionId)}/status";
 
                 var payload = new { status };
@@ -192,17 +208,16 @@ namespace PottaKDS.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    IsConnected = true;
+                    RecordSuccess();
                     return true;
                 }
 
-                LastErrorMessage = $"Failed to update status: {response.StatusCode}";
+                RecordFailure($"Failed to update status: {response.StatusCode}");
                 return false;
             }
             catch (Exception ex)
             {
-                IsConnected = false;
-                LastErrorMessage = ex.Message;
+                RecordFailure(ex.Message);
                 return false;
             }
         }
@@ -212,7 +227,7 @@ namespace PottaKDS.Services
             var baseUrl = CurrentBaseUrl;
             try
             {
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(6));
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
                 var url = $"{baseUrl}/api/orders/waiting/{Uri.EscapeDataString(transactionId)}/items";
 
                 var payload = new 
@@ -225,17 +240,16 @@ namespace PottaKDS.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    IsConnected = true;
+                    RecordSuccess();
                     return true;
                 }
 
-                LastErrorMessage = $"Failed to update items: {response.StatusCode}";
+                RecordFailure($"Failed to update items: {response.StatusCode}");
                 return false;
             }
             catch (Exception ex)
             {
-                IsConnected = false;
-                LastErrorMessage = ex.Message;
+                RecordFailure(ex.Message);
                 return false;
             }
         }
@@ -245,24 +259,23 @@ namespace PottaKDS.Services
             var baseUrl = CurrentBaseUrl;
             try
             {
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(6));
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
                 var url = $"{baseUrl}/api/orders/waiting/{Uri.EscapeDataString(transactionId)}";
 
                 var response = await _httpClient.DeleteAsync(url, cts.Token);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    IsConnected = true;
+                    RecordSuccess();
                     return true;
                 }
 
-                LastErrorMessage = $"Failed to complete order: {response.StatusCode}";
+                RecordFailure($"Failed to complete order: {response.StatusCode}");
                 return false;
             }
             catch (Exception ex)
             {
-                IsConnected = false;
-                LastErrorMessage = ex.Message;
+                RecordFailure(ex.Message);
                 return false;
             }
         }

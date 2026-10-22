@@ -289,8 +289,23 @@ namespace PottaKDS.ViewModels
             };
             _clockTimer.Tick += (_, _) =>
             {
-                foreach (var order in KitchenOrders)
+                for (int i = KitchenOrders.Count - 1; i >= 0; i--)
                 {
+                    var order = KitchenOrders[i];
+                    bool isOnline = (order.IsOnlineOrderExplicit == true) ||
+                                    order.TransactionId.StartsWith("web_", StringComparison.OrdinalIgnoreCase) ||
+                                    (!string.IsNullOrEmpty(order.TableName) && order.TableName.IndexOf("Online", StringComparison.OrdinalIgnoreCase) >= 0);
+                    if (isOnline)
+                    {
+                        var utc = order.CreatedDate.Kind == DateTimeKind.Utc ? order.CreatedDate : order.CreatedDate.ToUniversalTime();
+                        if ((DateTime.UtcNow - utc).TotalHours > 24)
+                        {
+                            _knownOrderIds.Remove(order.TransactionId);
+                            _knownRefiredOrderIds.Remove(order.TransactionId);
+                            KitchenOrders.RemoveAt(i);
+                            continue;
+                        }
+                    }
                     order.UpdateWaitingTime();
                 }
             };
@@ -327,21 +342,53 @@ namespace PottaKDS.ViewModels
             bool hasNewOrders = false;
             bool hasNewRefires = false;
 
-            var currentTxnIds = dtos.Select(d => d.TransactionId).ToHashSet();
+            // Strictly filter out any online order older than 24 hours
+            var activeDtos = dtos.Where(dto =>
+            {
+                bool isOnline = dto.IsOnlineOrder ||
+                                dto.TransactionId.StartsWith("web_", StringComparison.OrdinalIgnoreCase) ||
+                                (!string.IsNullOrEmpty(dto.TableName) && dto.TableName.IndexOf("Online", StringComparison.OrdinalIgnoreCase) >= 0);
+                if (isOnline)
+                {
+                    var utc = dto.CreatedDate.Kind == DateTimeKind.Utc ? dto.CreatedDate : dto.CreatedDate.ToUniversalTime();
+                    if ((DateTime.UtcNow - utc).TotalHours > 24)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }).ToList();
 
-            // 1. Remove completed/deleted orders
+            var currentTxnIds = activeDtos.Select(d => d.TransactionId).ToHashSet();
+
+            // 1. Remove completed/deleted/expired orders
             for (int i = KitchenOrders.Count - 1; i >= 0; i--)
             {
-                if (!currentTxnIds.Contains(KitchenOrders[i].TransactionId))
+                var order = KitchenOrders[i];
+                bool isOnline = (order.IsOnlineOrderExplicit == true) ||
+                                order.TransactionId.StartsWith("web_", StringComparison.OrdinalIgnoreCase) ||
+                                (!string.IsNullOrEmpty(order.TableName) && order.TableName.IndexOf("Online", StringComparison.OrdinalIgnoreCase) >= 0);
+
+                bool isExpiredOnline = false;
+                if (isOnline)
                 {
-                    _knownOrderIds.Remove(KitchenOrders[i].TransactionId);
-                    _knownRefiredOrderIds.Remove(KitchenOrders[i].TransactionId);
+                    var utc = order.CreatedDate.Kind == DateTimeKind.Utc ? order.CreatedDate : order.CreatedDate.ToUniversalTime();
+                    if ((DateTime.UtcNow - utc).TotalHours > 24)
+                    {
+                        isExpiredOnline = true;
+                    }
+                }
+
+                if (isExpiredOnline || !currentTxnIds.Contains(order.TransactionId))
+                {
+                    _knownOrderIds.Remove(order.TransactionId);
+                    _knownRefiredOrderIds.Remove(order.TransactionId);
                     KitchenOrders.RemoveAt(i);
                 }
             }
 
             // 2. Add or Update orders in-place
-            foreach (var dto in dtos)
+            foreach (var dto in activeDtos)
             {
                 var existing = KitchenOrders.FirstOrDefault(o => o.TransactionId == dto.TransactionId);
 
